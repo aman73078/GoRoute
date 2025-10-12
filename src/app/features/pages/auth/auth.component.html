@@ -1,0 +1,59 @@
+<div class="min-h-screen flex flex-col md:flex-row items-stretch bg-gray-100 font-sans">
+
+    <!-- Left Section -->
+    <div
+        class="relative w-full md:w-1/2 bg-gradient-to-br from-red-100 to-white p-10 overflow-hidden flex flex-col justify-center items-center text-center">
+
+        <!-- Text Content -->
+        <h2 class="text-3xl font-bold text-red-600">Welcome to GoRoute</h2>
+        <p class="text-gray-600 max-w-md">
+            Book your bus tickets fast and easy. Enjoy safe, comfortable and verified travels.
+        </p>
+
+        <!-- <img src="images/bus3.png" style="width: 400px; height: 400px;" alt="Bus Right" class="bus bus-right" /> -->
+        <img src="images/bus1.png" style="width: 500px; height: 500px;" alt="Bus Left" class="bus bus-left" />
+        <!-- Animated Buses -->
+        <!-- <div class="relative w-full h-60 mt-10">
+      
+            
+    </div> -->
+    </div>
+
+    <!-- Right Section (Form) -->
+    <div class="w-full md:w-1/2 bg-white p-10 flex flex-col justify-center items-center">
+        <div class="w-full max-w-md">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">
+                {{ mode === 'signin' ? 'Sign In to Your Account' : 'Create an Account' }}
+            </h2>
+
+            <form>
+                <div *ngIf="mode === 'signup'" class="mb-4">
+                    <input type="text" placeholder="Full Name"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-red-500" />
+                </div>
+
+                <div class="mb-4">
+                    <input type="email" placeholder="Email"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-red-500" />
+                </div>
+
+                <div class="mb-6">
+                    <input type="password" placeholder="Password"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-red-500" />
+                </div>
+
+                <button type="submit"
+                    class="w-full bg-red-600 text-white font-semibold py-3 rounded-lg hover:bg-red-700 transition">
+                    {{ mode === 'signin' ? 'Sign In' : 'Sign Up' }}
+                </button>
+            </form>
+
+            <p class="mt-6 text-sm text-gray-500 text-center">
+                {{ mode === 'signin' ? "Don't have an account?" : 'Already have an account?' }}
+                <button class="text-red-600 font-semibold ml-1 hover:underline" (click)="toggleMode()">
+                    {{ mode === 'signin' ? 'Sign Up' : 'Sign In' }}
+                </button>
+            </p>
+        </div>
+    </div>
+</div>

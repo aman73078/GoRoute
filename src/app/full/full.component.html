@@ -1,0 +1,147 @@
+<!-- Sticky, Primary Navigation Header -->
+<header class="sticky top-0 z-50 bg-red-600 shadow-lg font-['Inter']">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+
+      <!-- Logo / Brand Name Section -->
+<div class="flex items-center gap-1 mt-1">
+  <div class="" [ngClass]="{'slide-left-animation': animateLogo}">
+    <img src="images/bus3.png" alt="GoRoute Bus Logo" class="w-24 h-24" />
+  </div>
+  <a href="/" class="text-white text-3xl font-extrabold tracking-tight">
+    GoRoute
+  </a>
+</div>
+
+
+
+
+      <!-- Desktop Navigation Links -->
+      <nav class="hidden md:block">
+        <div class="ml-10 flex items-baseline space-x-4">
+          <a *ngFor="let link of navLinks()" [href]="link.href"
+            class="text-white hover:bg-red-700/80 px-3 py-2 rounded-lg text-sm font-medium transition duration-150 ease-in-out cursor-pointer">
+            {{ link.label }}
+          </a>
+        </div>
+      </nav>
+
+      <!-- User/Action Button -->
+      <div class="hidden md:flex items-center space-x-4">
+        <!-- Simplified: Removed User ID display -->
+        <button
+          class="bg-white text-red-600 font-semibold px-4 py-2 rounded-full shadow-md hover:bg-gray-100 transition duration-150 ease-in-out text-sm curson cursor-pointer" [routerLink]="'auth'">
+          Sign In / Profile
+        </button>
+      </div>
+
+      <!-- Mobile Menu Button (Hamburger) -->
+      <div class="md:hidden flex items-center">
+        <button (click)="toggleMenu()"
+          class="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+          aria-expanded="false">
+          <!-- Menu Icon SVG (Hamburger) -->
+          <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor" aria-hidden="true">
+            <path [attr.stroke-linecap]="'round'" [attr.stroke-linejoin]="'round'" [attr.stroke-width]="'2'"
+              [attr.d]="isMenuOpen() ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'" />
+          </svg>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Mobile Menu Content -->
+  <div class="md:hidden" [class.hidden]="!isMenuOpen()">
+    <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-red-500/50">
+      <a *ngFor="let link of navLinks()" [href]="link.href"
+        class="text-white hover:bg-red-700/80 block px-3 py-2 rounded-md text-base font-medium transition duration-150 ease-in-out cursor-pointer"
+        (click)="toggleMenu()">
+        {{ link.label }}
+      </a>
+      <button
+        class="w-full bg-white text-red-600 font-semibold px-4 py-2 mt-2 rounded-md shadow-md hover:bg-gray-100 transition duration-150 ease-in-out text-base text-left">
+        Sign In / Profile
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Content Area: Empty placeholder after header -->
+<main class="bg-gray-100 min-h-[calc(100vh-4rem)]">
+  <!-- <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="text-center text-gray-500 p-10">
+      <p class="text-xl font-medium">Your header is ready! Add content here.</p>
+    </div>
+  </div> -->
+  <router-outlet></router-outlet>
+</main>
+
+<!-- Footer Section -->
+<footer class="bg-gray-800 text-white font-['Inter']">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="grid grid-cols-2 gap-8 md:grid-cols-4">
+
+      <!-- Company Section -->
+      <div>
+        <h4 class="font-bold text-xl mb-4 text-red-400">GoRoute</h4>
+        <ul class="space-y-2 text-sm text-gray-400">
+          <li><a href="#" class="hover:text-red-300 transition duration-150">About Us</a></li>
+          <li><a href="#" class="hover:text-red-300 transition duration-150">Careers</a></li>
+          <li><a href="#" class="hover:text-red-300 transition duration-150">Press</a></li>
+          <li><a href="#" class="hover:text-red-300 transition duration-150">Affiliates</a></li>
+        </ul>
+      </div>
+
+      <!-- Quick Links Section -->
+      <div>
+        <h4 class="font-bold text-lg mb-4">Quick Links</h4>
+        <ul class="space-y-2 text-sm text-gray-400">
+          <li><a href="#" class="hover:text-red-300 transition duration-150">Routes</a></li>
+          <li><a href="#" class="hover:text-red-300 transition duration-150">Offers</a></li>
+          <li><a href="#" class="hover:text-red-300 transition duration-150">Bus Operators</a></li>
+          <li><a href="#" class="hover:text-red-300 transition duration-150">Sitemap</a></li>
+        </ul>
+      </div>
+
+      <!-- Support Section -->
+      <div>
+        <h4 class="font-bold text-lg mb-4">Support</h4>
+        <ul class="space-y-2 text-sm text-gray-400">
+          <li><a href="#" class="hover:text-red-300 transition duration-150">Contact Us</a></li>
+          <li><a href="#" class="hover:text-red-300 transition duration-150">FAQ</a></li>
+          <li><a href="#" class="hover:text-red-300 transition duration-150">Cancellation Policy</a></li>
+          <li><a href="#" class="hover:text-red-300 transition duration-150">Feedback</a></li>
+        </ul>
+      </div>
+
+      <!-- Social & Apps Section -->
+      <div>
+        <h4 class="font-bold text-lg mb-4">Download App</h4>
+        <p class="text-sm text-gray-400 mb-4">Get the best deals on the GoRoute mobile app.</p>
+        <div class="space-y-3">
+          <!-- Placeholder for App Store Button -->
+          <a href="#"
+            class="block bg-gray-700 hover:bg-gray-600 transition duration-150 p-3 rounded-lg text-center text-sm font-semibold">
+            App Store
+          </a>
+          <!-- Placeholder for Google Play Button -->
+          <a href="#"
+            class="block bg-gray-700 hover:bg-gray-600 transition duration-150 p-3 rounded-lg text-center text-sm font-semibold">
+            Google Play
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Copyright and Legal Line -->
+    <div class="border-t border-gray-700 mt-12 pt-6 text-center text-sm text-gray-500">
+      <p class="mb-2">&copy; {{ currentYear }} GoRoute Inc. All rights reserved.</p>
+      <a href="#" class="hover:text-red-400 mx-2">Terms of Use</a> |
+      <a href="#" class="hover:text-red-400 mx-2">Privacy Policy</a> |
+      <a href="#" class="hover:text-red-400 mx-2">Cookie Preferences</a>
+    </div>
+  </div>
+</footer>

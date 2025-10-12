@@ -1,0 +1,57 @@
+// :host {
+//     display: block;
+//     min-height: 100vh;
+//     font-family: 'Inter', sans-serif;
+// }
+
+// input[type="date"]::-webkit-calendar-picker-indicator {
+//     opacity: 0;
+//     /* Hides the default icon */
+//     position: absolute;
+//     width: 100%;
+//     height: 100%;
+//     cursor: pointer;
+// }
+
+.home-page {
+  position: relative;
+  width: 100%;
+  height: 70vh;
+  overflow: hidden;
+  background-color: #eef2f3; // Optional background
+}
+
+// Common bus styles
+.bus {
+  position: absolute;
+  bottom: 50px;
+  width: 120px;
+  height: auto;
+}
+
+// Bus from left
+.bus-left {
+  left: -150px;
+  animation: moveFromLeft 3s ease-out forwards;
+}
+
+// Bus from right
+.bus-right {
+  right: -150px;
+  animation: moveFromRight 3s ease-out forwards;
+}
+
+// Animate left bus to center-left
+@keyframes moveFromLeft {
+  100% {
+    left: calc(50% - 400px); // slightly left of center
+  }
+}
+
+// Animate right bus to center-right
+@keyframes moveFromRight {
+  100% {
+    right: calc(50% - 400px); // slightly right of center
+  }
+}
+

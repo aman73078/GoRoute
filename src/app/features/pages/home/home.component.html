@@ -1,0 +1,167 @@
+<!-- Content Area: Home Page Sections -->
+<main class="bg-gray-100 min-h-[calc(100vh-4rem)] font-['Inter']">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+
+        <div class="home-page">
+            <img src="images/bus1.png" style="width: 400px; height: 400px;" alt="Bus Left" class="bus bus-left" />
+            <img src="images/bus2.png" style="width: 400px; height: 400px;" alt="Bus Right" class="bus bus-right" />
+        </div>
+
+        <!-- Hero Section with Title and ATTRACTIVE Search Widget -->
+        <div class="relative bg-white p-4 sm:p-6 rounded-3xl shadow-2xl shadow-red-300/50 -mt-10 mb-12">
+
+            <h1 class="hidden sm:block text-3xl font-extrabold text-gray-800 mb-2 text-center">
+                Book Your Bus Ticket Online
+            </h1>
+            <p class="hidden sm:block text-md text-gray-500 mb-6 text-center">
+                The fastest way to plan your travel.
+            </p>
+
+            <!-- Tab Navigation for Search Type -->
+            <div class="flex justify-center mb-6 border-b border-gray-200">
+                <button (click)="setActiveTab('bus')" [class.border-red-600]="activeTab() === 'bus'"
+                    [class.text-red-600]="activeTab() === 'bus'" [class.border-transparent]="activeTab() !== 'bus'"
+                    [class.text-gray-500]="activeTab() !== 'bus'"
+                    class="px-6 py-2 text-lg font-semibold border-b-4 transition duration-200 hover:text-red-600">
+                    Bus
+                </button>
+                <button (click)="setActiveTab('cab')" [class.border-red-600]="activeTab() === 'cab'"
+                    [class.text-red-600]="activeTab() === 'cab'" [class.border-transparent]="activeTab() !== 'cab'"
+                    [class.text-gray-500]="activeTab() !== 'cab'"
+                    class="px-6 py-2 text-lg font-semibold border-b-4 transition duration-200 hover:text-red-600">
+                    Cab
+                </button>
+            </div>
+
+
+            <!-- Primary Search Widget (Bus Booking Focus) -->
+            <div *ngIf="activeTab() === 'bus'" class="max-w-6xl mx-auto">
+                <div
+                    class="flex flex-col md:flex-row items-center justify-center gap-2 bg-white rounded-xl p-2 border-2 border-red-500/50">
+
+                    <!-- Source Field -->
+                    <div class="relative flex-1 min-w-0 w-full md:w-auto z-20">
+                        <label class="block text-xs font-medium text-gray-400 absolute top-1 left-4">FROM</label>
+                        <input type="text" placeholder="Source City" [value]="sourceCityInput()"
+                            (input)="onSourceInput($event)"
+                            class="w-full bg-gray-50 border-transparent text-lg pt-5 pb-2 px-4 rounded-lg focus:ring-0 focus:border-red-500 transition duration-150 font-bold text-gray-700">
+
+                        <!-- Source Suggestions Dropdown -->
+                        <ul *ngIf="sourceSuggestions().length > 0"
+                            class="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-xl mt-1 max-h-60 overflow-y-auto">
+                            <li *ngFor="let city of sourceSuggestions()" (mousedown)="selectCity(city, 'source')"
+                                class="px-4 py-3 cursor-pointer text-gray-700 hover:bg-red-50 transition duration-100 border-b border-gray-100 last:border-b-0">
+                                {{ city }}
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Swap Button -->
+                    <button (click)="swapCities()"
+                        class="flex-shrink-0 bg-white border border-red-500 text-red-600 rounded-full p-2 shadow-md hover:bg-red-50 hover:shadow-lg transition duration-200 transform hover:rotate-180 -my-2 md:my-0 z-10">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
+                            stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
+                        </svg>
+                    </button>
+
+                    <!-- Destination Field -->
+                    <div class="relative flex-1 min-w-0 w-full md:w-auto z-20">
+                        <label class="block text-xs font-medium text-gray-400 absolute top-1 left-4">TO</label>
+                        <input type="text" placeholder="Destination City" [value]="destinationCityInput()"
+                            (input)="onDestinationInput($event)"
+                            class="w-full bg-gray-50 border-transparent text-lg pt-5 pb-2 px-4 rounded-lg focus:ring-0 focus:border-red-500 transition duration-150 font-bold text-gray-700">
+
+                        <!-- Destination Suggestions Dropdown -->
+                        <ul *ngIf="destinationSuggestions().length > 0"
+                            class="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-xl mt-1 max-h-60 overflow-y-auto">
+                            <li *ngFor="let city of destinationSuggestions()"
+                                (mousedown)="selectCity(city, 'destination')"
+                                class="px-4 py-3 cursor-pointer text-gray-700 hover:bg-red-50 transition duration-100 border-b border-gray-100 last:border-b-0">
+                                {{ city }}
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Date Field -->
+                    <div class="relative flex-1 min-w-0 w-full md:w-auto">
+                        <label class="block text-xs font-medium text-gray-400 absolute top-1 left-4">DATE</label>
+                        <input type="date" value="2025-10-25"
+                            class="w-full bg-gray-50 border-transparent text-lg pt-5 pb-2 px-4 rounded-lg focus:ring-0 focus:border-red-500 transition duration-150 text-gray-700 cursor-pointer">
+                    </div>
+
+                    <!-- Search Button -->
+                    <div class="flex-shrink-0 w-full md:w-auto">
+                        <button
+                            class="w-full md:w-32 bg-red-600 text-white text-lg font-bold py-3 rounded-xl shadow-lg hover:bg-red-700 transition duration-200 ease-in-out">
+                            Search
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cab Search Widget Placeholder -->
+            <div *ngIf="activeTab() === 'cab'" class="text-center p-10 text-gray-500 border border-dashed rounded-xl">
+                <p>Cab booking functionality coming soon! Please use the Bus tab for now.</p>
+            </div>
+
+        </div>
+
+        <!-- Section 2: Explore Popular Destinations (City Cards) -->
+        <div class="mt-16">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Popular Destinations to Explore</h2>
+
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+
+                <!-- Use a loop for destinations if the data was dynamic, but hardcoding for now -->
+                <div *ngFor="let city of popularCities()"
+                    class="bg-white rounded-xl shadow-md overflow-hidden transform hover:shadow-xl hover:-translate-y-1 transition duration-300 cursor-pointer">
+
+                    <!-- Image component now uses the Data URI for reliable rendering -->
+                    <img [src]="city.imgUrl" [alt]="city.name + ' City'" class="w-full h-32 object-cover">
+
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg text-gray-800">{{ city.name }}</h3>
+                        <p class="text-sm text-gray-500 mt-1">{{ city.description }}</p>
+                        <a href="#" class="mt-3 inline-block text-red-600 font-semibold text-sm hover:text-red-800">View
+                            Buses &rarr;</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Section 3: Value Proposition / Why Choose Us (More Relevant Content) -->
+        <div class="mt-16 text-center">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">Why GoRoute is Your Best Choice</h2>
+            <p class="text-gray-500 mb-10 max-w-2xl mx-auto">Committed to providing a smooth, reliable, and comfortable
+                journey every time.</p>
+
+            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <!-- Feature 1: No Hidden Fees -->
+                <div class="p-6 bg-white rounded-xl shadow-lg border-t-4 border-red-600">
+                    <div class="text-red-600 text-3xl mb-3">💰</div>
+                    <p class="font-bold text-xl text-gray-800">Transparent Pricing</p>
+                    <p class="text-sm text-gray-500 mt-2">The price you see is the price you pay. No last-minute
+                        surprises or hidden fees.</p>
+                </div>
+                <!-- Feature 2: 24/7 Support -->
+                <div class="p-6 bg-white rounded-xl shadow-lg border-t-4 border-red-600">
+                    <div class="text-red-600 text-3xl mb-3">📞</div>
+                    <p class="font-bold text-xl text-gray-800">24/7 Customer Support</p>
+                    <p class="text-sm text-gray-500 mt-2">Our dedicated team is ready to assist you any time, day or
+                        night, for any issue.</p>
+                </div>
+                <!-- Feature 3: Verified Operators -->
+                <div class="p-6 bg-white rounded-xl shadow-lg border-t-4 border-red-600">
+                    <div class="text-red-600 text-3xl mb-3">✅</div>
+                    <p class="font-bold text-xl text-gray-800">Verified Operators</p>
+                    <p class="text-sm text-gray-500 mt-2">We partner only with reliable and highly-rated bus operators
+                        for your safety.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</main>
