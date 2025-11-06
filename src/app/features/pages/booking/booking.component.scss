@@ -1,0 +1,21 @@
+.input-field {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  width: 100%;
+  font-size: 0.9rem;
+  outline: none;
+  &:focus { border-color: #ef4444; box-shadow: 0 0 0 2px rgba(239,68,68,0.2); }
+}
+
+button {
+  &:disabled,
+  &.cursor-not-allowed {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+button.bg-red-500 {
+  background-color: #ef4444 !important;
+}

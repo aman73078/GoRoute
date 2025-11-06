@@ -1,9 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule],
+  imports: [CommonModule,FormsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -11,6 +13,7 @@ import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 export class HomeComponent {
   // New signal to manage the active search tab
   activeTab = signal<'bus' | 'cab'>('bus');
+  selectedDate:Date = new Date();
   popularCities = signal([
     // Updated image URLs to be more visually appealing and representative
     {
@@ -87,6 +90,7 @@ export class HomeComponent {
   sourceSuggestions = signal<string[]>([]);
   destinationSuggestions = signal<string[]>([]);
   // ----------------------------------------
+  constructor(private route:Router){}
 
   private generateCitySvg(color: string, emoji: string): string {
     const svgContent = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='${color}'/><text x='50' y='60' font-size='40' font-family='sans-serif' text-anchor='middle' fill='%23FFFFFF'>${emoji}</text></svg>`;
@@ -169,5 +173,14 @@ export class HomeComponent {
   triggerAnimation() {
     this.animate = false;
     setTimeout(() => this.animate = true, 10); // Restart animation
+  }
+
+  onSearach(){
+    let param = {
+      sourceCity: this.sourceCityInput,
+      destinationCity: this.destinationCityInput,
+      selectedDate: this.selectedDate
+    }
+    this.route.navigate(['/overview/listing'], {queryParams:{...param}})
   }
 }

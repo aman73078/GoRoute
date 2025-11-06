@@ -26,19 +26,20 @@
                 {{ mode === 'signin' ? 'Sign In to Your Account' : 'Create an Account' }}
             </h2>
 
-            <form>
+            <form [formGroup]="activeForm" (ngSubmit)="onSubmit()">
+                <!-- Full name (only for signup) -->
                 <div *ngIf="mode === 'signup'" class="mb-4">
-                    <input type="text" placeholder="Full Name"
+                    <input type="text" placeholder="Full Name" formControlName="fullName"
                         class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-red-500" />
                 </div>
 
                 <div class="mb-4">
-                    <input type="email" placeholder="Email"
+                    <input type="email" placeholder="Email" formControlName="email"
                         class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-red-500" />
                 </div>
 
                 <div class="mb-6">
-                    <input type="password" placeholder="Password"
+                    <input type="password" placeholder="Password" formControlName="password"
                         class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-red-500" />
                 </div>
 
@@ -56,4 +57,5 @@
             </p>
         </div>
     </div>
+
 </div>

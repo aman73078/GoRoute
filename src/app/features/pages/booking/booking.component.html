@@ -1,0 +1,99 @@
+<main class="bg-gray-100 min-h-screen py-10 font-['Inter']">
+  <div class="max-w-7xl mx-auto px-4">
+
+    <!-- Trip Header -->
+    <div class="bg-white p-4 sm:p-6 rounded-xl shadow-md mb-6 border-l-4 border-red-600">
+      <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
+        <h1 class="text-xl font-bold text-gray-800">
+          <span class="text-red-600">{{ source() }}</span> to <span class="text-red-600">{{ destination() }}</span>
+        </h1>
+        <div class="text-lg text-gray-600">
+          <span class="font-semibold">{{ date() }}</span>
+        </div>
+        <button (click)="toggleModifySearch()" class="bg-red-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-700 transition"> Modify Search </button>
+      </div>
+
+      <!-- Modify Search Form -->
+      <div *ngIf="showModifySearch()" class="mt-4 pt-4 border-t border-gray-200">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <input type="text" [value]="source()" placeholder="From" #src class="input-field">
+          <input type="text" [value]="destination()" placeholder="To" #dest class="input-field">
+          <input type="date" [value]="date()" #dt class="input-field">
+        </div>
+        <div class="text-right mt-4">
+          <button (click)="updateSearch(src.value,dest.value,dt.value)" class="bg-red-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-red-700 transition"> Update Search </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bus Info -->
+    <div class="bg-white p-6 rounded-xl shadow-lg mb-6 flex items-center justify-between gap-4">
+      <div>
+        <h2 class="text-xl font-bold">{{ bus.operator }}</h2>
+        <p class="text-gray-500 mt-1">{{ bus.type }} / {{ bus.seater }}</p>
+        <p class="text-sm text-gray-500 mt-1">Rating: {{ bus.rating }} ⭐</p>
+      </div>
+      <div class="text-center">
+        <p class="font-semibold text-gray-700 text-lg">{{ bus.departure }}</p>
+        <p class="text-xs text-gray-500">{{ source() }}</p>
+      </div>
+      <div class="text-center text-gray-400">
+        <p class="text-xs font-semibold">{{ bus.duration }}</p>
+      </div>
+      <div class="text-center">
+        <p class="font-semibold text-gray-700 text-lg">{{ bus.arrival }}</p>
+        <p class="text-xs text-gray-500">{{ destination() }}</p>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex flex-col lg:flex-row gap-8">
+      <!-- Seat Map -->
+      <section class="flex-1 bg-white p-6 rounded-xl shadow-lg relative">
+        <div class="w-full h-16 bg-red-600 rounded-t-xl flex items-center justify-center text-white font-bold mb-4">DRIVER</div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div class="space-y-2">
+            <div *ngFor="let row of seats.slice(0,3)">
+              <button *ngFor="let seat of row"
+                (click)="toggleSeat(seat)"
+                [class.bg-gray-300]="seat.booked"
+                [class.bg-red-500]="selectedSeats().includes(seat)"
+                [class.cursor-not-allowed]="seat.booked"
+                class="w-14 h-14 rounded-lg border border-gray-400 text-white font-bold hover:scale-110 transition-all">
+                {{ seat.id }}
+              </button>
+            </div>
+          </div>
+          <div class="space-y-2">
+            <div *ngFor="let row of seats.slice(3)">
+              <button *ngFor="let seat of row"
+                (click)="toggleSeat(seat)"
+                [class.bg-gray-300]="seat.booked"
+                [class.bg-red-500]="selectedSeats().includes(seat)"
+                [class.cursor-not-allowed]="seat.booked"
+                class="w-20 h-12 rounded-lg border border-gray-400 text-white font-bold hover:scale-110 transition-all">
+                {{ seat.id }}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Legend -->
+        <div class="mt-6 flex items-center gap-4">
+          <div class="flex items-center gap-1"><div class="w-4 h-4 bg-red-500 rounded-sm"></div> Selected</div>
+          <div class="flex items-center gap-1"><div class="w-4 h-4 bg-gray-300 rounded-sm"></div> Booked</div>
+          <div class="flex items-center gap-1"><div class="w-4 h-4 bg-white border border-gray-400 rounded-sm"></div> Available</div>
+        </div>
+      </section>
+
+      <!-- Booking Summary -->
+      <aside class="lg:w-1/3 bg-white p-6 rounded-xl shadow-lg">
+        <h2 class="text-xl font-bold text-gray-800 mb-4">Booking Summary</h2>
+        <p class="mb-2">Selected Seats: <span class="font-semibold">{{ this.getSelectedSeat() }}</span></p>
+        <p class="mb-4">Total Price: <span class="font-bold text-red-600">₹{{ getTotalPrice() }}</span></p>
+        <button (click)="bookSeats()" class="w-full bg-red-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-700 transition-all">Book Now</button>
+      </aside>
+    </div>
+  </div>
+</main>
